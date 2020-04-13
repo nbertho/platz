@@ -1,0 +1,78 @@
+// ./scss/framework/modules/_txts.scss
+// MODULES DES txtS
+
+.txt-font-1 {
+  font-family: $texteFont1;
+}
+.txt-font-2 {
+  font-family: $texteFont2;
+}
+
+/* Alignements des txts */
+  .txt-align-center {
+    text-align: center;
+  }
+  .txt-align-left {
+    text-align: left;
+  }
+  .txt-align-right {
+    text-align: right;
+  }
+  .txt-align-justify {
+    text-align: justify;
+  }
+
+  /* Couleurs des txts */
+    .txt-color-1 {
+      color: $couleur1;
+    }
+    .txt-color-1-light {
+      color: $couleur1Claire;
+    }
+    .txt-color-1-dark {
+      color: $couleur1Foncee;
+    }
+
+    .txt-color-2 {
+      color: $couleur2;
+    }
+    .txt-color-2-light {
+      color: $couleur2Claire;
+    }
+    .txt-color-2-dark {
+      color: $couleur2Foncee;
+    }
+
+
+  /* Tailles des txts */
+    .txt-size-xl {
+      font-size: $texteTailleXl;
+    }
+    .txt-size-l {
+      font-size: $texteTailleL;
+    }
+    .txt-size-m {
+      font-size: $texteTailleM;
+    }
+    .txt-size-s {
+      font-size: $texteTailleS;
+    }
+    .txt-size-xs {
+      font-size: $texteTailleXs;
+    }
+
+  /* Types de txts */
+    .txt-type-up {
+      text-transform: uppercase;
+    }
+    .txt-type-low {
+      text-transform: lowercase;
+    }
+    .txt-type-cap {
+      text-transform: capitalize;
+    }
+
+  /* Styes de txts */
+    .txt-style-bold {
+      font-weight: bold;
+    }

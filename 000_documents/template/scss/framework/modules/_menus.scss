@@ -1,0 +1,56 @@
+// ./scss/framework/modules/_menus.scss
+// MODULE DES MENUS
+
+  .menu-type-horizontal {
+    display: flex;
+    justify-content: $menuJustifyContentHorizontal;
+    list-style: none;
+    padding-left: 0;
+    align-items: $menuAlignVertical;
+  }
+
+  .menu-type-horizontal > li > a  {
+    background: $menuCouleurNormal;
+    padding: 1em;
+    color: $menuCouleurTexteNormal;
+    text-decoration: none;
+  }
+
+  .menu-type-horizontal > li:not(:last-of-type){
+    margin-right: $menuGoutiere;
+  }
+
+  .menu-type-horizontal > li.actif > a,
+  .menu-type-horizontal > li > a:hover,
+  .menu-type-horizontal > li > a:active {
+    background: $menuCouleurActif;
+    color: $menuCouleurTexteActif;
+  }
+
+  .menu-type-vertical {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding-left: 0;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .menu-type-vertical > li > a  {
+    background: $menuCouleurNormal;
+    padding: 1em;
+    color: $menuCouleurTexteNormal;
+    text-decoration: none;
+  }
+
+  .menu-type-vertical > li:not(:last-of-type){
+    margin-right: $menuGoutiere;
+  }
+
+  .menu-type-vertical > li.actif > a,
+  .menu-type-vertical > li > a:hover,
+  .menu-type-vertical > li > a:active {
+    background: $menuCouleurActif;
+    color: $menuCouleurTexteActif;
+  }

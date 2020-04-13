@@ -1,0 +1,24 @@
+// ./scss/framework/modules/_paginations.scss
+// MODULE DES PAGINATIONS
+
+  .pagination {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: $paginationJustifyContent;
+    align-items: $paginationAlignVertical;
+    a {
+      color : $paginationCouleurTexteNormal;
+      background: $paginationCouleurNormal;
+      padding: $paginationPadding;
+      text-decoration: none;
+      border: $paginationBordNormal;
+    }
+    li:not(:last-of-type) a {
+      border-right: 0;
+    }
+    li.actif a, a:hover {
+      background: $paginationCouleurActif;
+      color: $paginationCouleurTexteActif;
+    }
+  }

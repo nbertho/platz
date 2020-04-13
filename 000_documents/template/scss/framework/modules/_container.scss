@@ -1,0 +1,8 @@
+// ./scss/framework/modules/_container.scss
+// MODULE DES GRILLES
+
+.container {
+  width: $tailleContainer;
+  margin: auto;
+  max-width: $tailleMax;
+}

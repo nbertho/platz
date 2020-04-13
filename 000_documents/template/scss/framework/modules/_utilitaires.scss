@@ -1,0 +1,66 @@
+// ./scss/framework/modules/_utilistaires.scss
+// Modules des utilitaires
+
+.display-none {
+  display: none;
+}
+
+
+// Display none sur une seule taille
+@media screen and (max-width:$screenSp) {
+	.display-xs-none {
+		display: none;
+	}
+}
+@media screen and (min-width: $screenSg) and (max-width:$screenMp) {
+	.display-s-none {
+		display: none;
+	}
+}
+@media screen and (min-width: $screenMg) and (max-width:$screenLp) {
+	.display-m-none {
+		display: none;
+	}
+}
+@media screen and (min-width: $screenLg) and (max-width:$screenXlp) {
+	.display-l-none {
+		display: none;
+	}
+}
+@media screen and (min-width: $screenXlg) {
+	.display-xl-none {
+		display: none;
+	}
+}
+
+// Display none sur tout sauf sur une taille
+.display-xs-only {
+  display: none;
+  @media screen and (max-width:$screenSp) {
+    display: block;
+  }
+}
+.display-s-only {
+  display: none;
+  @media screen and (min-width: $screenSg) and (max-width:$screenMp) {
+    display: block;
+  }
+}
+.display-m-only {
+  display: none;
+  @media screen and (min-width: $screenMg) and (max-width:$screenLp) {
+  	display: block;
+	}
+}
+.display-l-only {
+  display: none;
+  @media screen and (min-width: $screenLg) and (max-width:$screenXlp) {
+	  display: block;
+  }
+}
+.display-xl-only {
+  display: none;
+  @media screen and (min-width: $screenXlg) {
+    display: block;
+	}
+}

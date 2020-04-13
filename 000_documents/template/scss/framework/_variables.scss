@@ -1,0 +1,128 @@
+// ./scss/framework/_variables.scss
+// PARAMETRES DU FRAMEWORK
+
+/*
+    1. LES COULEURS
+    2. LES TEXTES
+    3. LES BOITES
+    4. LES MENUS
+    5. LES GRILLES
+    6. LES PAGINATIONS
+ */
+
+/* -----------------------------------------
+    1. LES COULEURS
+----------------------------------------- */
+
+  // PALETTE DE COULEURS
+    $couleur1: #333333;
+    $couleur1Claire: #B3B3B3;
+    $couleur1Foncee: #2e2d30;
+
+    $couleur2: #999;
+    $couleur2Claire: #fff;
+    $couleur2Foncee: #f4f4f4;
+
+  // COULEURS NEUTRES
+    $couleurN1: #f2f2f2;
+    $couleurN1Claire: #f9f9f9;
+    $couleurN1Foncee: #2e2d30;
+
+
+/* -----------------------------------------
+2. LES TEXTES
+----------------------------------------- */
+
+  // POLICES
+    $texteFont1: Helvetica, sans-serif;
+    $texteFont2: 'Pacifico', cursive;
+
+  // TAILLES
+    $texteTailleXl: 20px;
+    $texteTailleL: 16px;
+    $texteTailleM: 16px;
+    $texteTailleS: .9rem;
+    $texteTailleXs: .5rem;
+
+
+/* -----------------------------------------
+    3. LES BOITES
+----------------------------------------- */
+
+  // LARGEURS
+    $tailleContainer: 80%;
+    $tailleMax: none;
+
+
+/* -----------------------------------------
+    4. LES MENUS
+----------------------------------------- */
+
+  // TOUS LES MENUS
+  $menuGoutiere: 1px;
+
+  // MENUS HORIZONTALS
+    $menuJustifyContentHorizontal: space-around;   /* flex-start, flex-end, center, space-between, space-around, stretch */
+    $menuAlignVertical: center;                    /* stretch, center, baseline */
+
+  // MENUS VERTICALS
+    $menuJustifyContentVertical: space-around;     /* flex-start, flex-end, center, space-between, space-around, stretch */
+    $menuAlignHorizontal: center;                  /* stretch, center, baseline */
+
+  // Etat normal
+    $menuCouleurNormal: $couleur1Claire;
+    $menuCouleurTexteNormal: $couleur1;
+
+  // Etat actif et hover
+    $menuCouleurActif: $couleur1Claire;
+    $menuCouleurTexteActif: $couleurN1;
+
+
+/* -----------------------------------------
+    5. LES GRILLES
+----------------------------------------- */
+
+  // GRILLE
+    $grilleNombreColonnes:       12;
+    $grilleGoutiereHorizontale: 0;
+    $grilleGoutiereVerticale:   30px;
+    $breakPoints:('xs'  :'0',
+                  's'   :'576px',
+                  'm'   :'768px',
+                  'l'   :'992px',
+                 'xl'   :'1200px');
+
+
+/* -----------------------------------------
+    6. LES PAGINATIONS
+----------------------------------------- */
+
+  // PAGINATION
+     $paginationJustifyContent: center;      /* flex-start, flex-end, center, space-between, space-around, stretch */
+     $paginationAlignVertical: center;       /* stretch, center, baseline */
+     $paginationPadding: .5em 1em;
+
+  // Etat normal
+    $paginationCouleurNormal: #fff;
+    $paginationCouleurTexteNormal: $couleur1;
+    $paginationBordNormal: $couleur1 1px solid;
+
+  // Etat actif et hover
+    $paginationCouleurActif: $couleur1;
+    $paginationCouleurTexteActif: #fff;
+
+
+ /* -----------------------------------------
+    6. UTILITAIRES
+----------------------------------------- */
+
+  // TAILLES
+    $screenXs:     0px;
+    $screenSp:     575px;
+    $screenSg:     576px;
+    $screenMp:     767px;
+    $screenMg:     768px;
+    $screenLp:     991px;
+    $screenLg:     992px;
+    $screenXlp:    1199px;
+    $screenXlg:    1200px;
