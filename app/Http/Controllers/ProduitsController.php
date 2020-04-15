@@ -15,8 +15,8 @@ class ProduitsController extends Controller {
      *
      * @return  obj  renvois un objet json contenant tous les produits et leur catégorie correspondante (id, nom, slug, created_at, poids, image, description, categories_id, user_id, categories {id, nom, slug, image})
      */
-    public function index($amount = 10){
-        $produits = ProduitsMdl::with(['categories'])->limit($amount)->get();
+    public function index() {
+        $produits = ProduitsMdl::with('user')->get();
         return response()->json($produits);
     }
 

@@ -28,7 +28,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route des produits
 
     // Index                                                                                       - DONE
-    Route::get('produits/{amount}', 'ProduitsController@index')->name('produits.index');
+    Route::get('produits', 'ProduitsController@index')->name('produits.index');
 
     
 // Route des categories

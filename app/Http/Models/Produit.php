@@ -14,7 +14,7 @@ class Produit extends Model {
     protected $table = 'produits';
 
     public function user() {
-        return $this->belongsTo('App\Http\Models\User');
+        return $this->hasOne('App\Http\Models\User', 'id', 'user_id');
     }
 
     public function categories() {
