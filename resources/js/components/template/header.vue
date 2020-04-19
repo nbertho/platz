@@ -7,14 +7,14 @@
             <div class="container">
                 <div>
                     <router-link :to="{ name: 'index'}">
-                        <figure v-on:click="changeFilterCategory(0)">
+                        <figure v-on:click="resetToHome()">
                             <img :src="global.publicPath + 'img/autres/logo-burst.png'" alt="Logo Platz">
                         </figure>
                     </router-link>
                 </div>
                 <a href="#" class="menu-ham">&nbsp;</a>
-                <form action="" method="get">
-                    <input @input="searchHeader" type="text" name="search-header" id="search">
+                <form v-on:submit.prevent>
+                    <input @input="searchHeader" type="text" id="search">
                 </form>
             </div>
         </section>
@@ -58,6 +58,12 @@
 <script>
     export default {
         methods: {
+            // Renvois vers la page d'accueil sans filtres actifs
+            resetToHome() {
+                this.$store.dispatch('setProduitsFiltre', 0);
+                this.$store.dispatch('setSearch', '');
+                document.getElementById('search').value ="";
+            },
             // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
             changeFilterCategory(categoryId) {
                 if (categoryId == this.$store.getters.getProduitsFiltre) {

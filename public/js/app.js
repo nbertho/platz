@@ -2269,6 +2269,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
+    // Renvois vers la page d'accueil sans filtres actifs
+    resetToHome: function resetToHome() {
+      this.$store.dispatch('setProduitsFiltre', 0);
+      this.$store.dispatch('setSearch', '');
+      document.getElementById('search').value = "";
+    },
     // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
     changeFilterCategory: function changeFilterCategory(categoryId) {
       if (categoryId == this.$store.getters.getProduitsFiltre) {
@@ -38370,7 +38376,7 @@ var render = function() {
                 {
                   on: {
                     click: function($event) {
-                      return _vm.changeFilterCategory(0)
+                      return _vm.resetToHome()
                     }
                   }
                 },
@@ -38392,12 +38398,22 @@ var render = function() {
           _vm._v(" ")
         ]),
         _vm._v(" "),
-        _c("form", { attrs: { action: "", method: "get" } }, [
-          _c("input", {
-            attrs: { type: "text", name: "search-header", id: "search" },
-            on: { input: _vm.searchHeader }
-          })
-        ])
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+              }
+            }
+          },
+          [
+            _c("input", {
+              attrs: { type: "text", id: "search" },
+              on: { input: _vm.searchHeader }
+            })
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
