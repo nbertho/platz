@@ -14,6 +14,9 @@ let getters = {
     getGlobalVariables(state) {
         return state.globalVariables;
     },
+    getSearch(state) {
+        return state.search;
+    },
 };
 
 export default getters;

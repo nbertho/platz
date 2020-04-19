@@ -5,6 +5,13 @@
         <!-- Articles -->
         <section id="products" class="container grid">
 
+            <div v-if="searchResult != ''">
+                <h1>Résultats de la recherche de : {{ searchResult }}</h1>
+                <br>
+
+            </div>
+
+
             <article class="article col-xs-12 col-s-6 col-m-4 col-xl-3" v-for="produit in produits.slice(showStart, showAmount)" :key="produit.id">
                 <router-link :to="{ name: 'produits.show', params: {produitId: produit.id } }">
                     <figure>
@@ -53,7 +60,7 @@
             showLess: function() {
                 this.showStart = this.showStart - 20
                 this.showAmount = this.showAmount - 20
-            }
+            },
         },
         beforeUpdate() {
             // Empeche l'affichage du nombre de produit de descendre en dessous de 0
@@ -63,6 +70,9 @@
             }
         },
         computed: {
+            searchResult() {
+                return this.$store.getters.getSearch
+            },
             // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
             produits() {
                 let produits =  this.$store.getters.getProduits;

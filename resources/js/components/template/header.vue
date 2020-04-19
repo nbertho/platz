@@ -14,7 +14,7 @@
                 </div>
                 <a href="#" class="menu-ham">&nbsp;</a>
                 <form action="" method="get">
-                    <input type="search" name="search-header" id="search">
+                    <input @input="searchHeader" type="text" name="search-header" id="search">
                 </form>
             </div>
         </section>
@@ -46,9 +46,10 @@
                     <img :src="global.publicPath + 'img/autres/small-logo.svg'" alt="Burstfly">
                 </figure>
                 <ul>
-                    <li><a href="#" v-on:click="changeFilterCategory(0)">Tous les produits</a></li>
                     <li v-for="cat in categories" :key="cat.id">
-                        <a href="#" v-on:click="changeFilterCategory(cat.id)">{{cat.nom}}</a>
+                        <router-link to="/">
+                            <div v-on:click="changeFilterCategory(cat.id)">{{cat.nom}}</div>
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -56,17 +57,23 @@
 
     </header>
 
-
 </template>
 
 <script>
-import store from '../../store/index.js';
     export default {
         methods: {
             // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
             changeFilterCategory(categoryId) {
-                this.$store.state.produitsFiltre = categoryId;
-            }
+                if (categoryId == this.$store.getters.getProduitsFiltre) {
+                    this.$store.dispatch('setProduitsFiltre', 0);
+                }
+                else {
+                    this.$store.dispatch('setProduitsFiltre', categoryId);
+                }
+            },
+            searchHeader(input) {
+                this.$store.dispatch('setSearch', input.target.value);
+            },
         },
         computed: {
             // Va chercher les variables globalVariables du store

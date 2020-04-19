@@ -16,6 +16,12 @@ let actions = {
         Axios.get('api/produits')
             .then(reponsePHP => (commit('SET_PRODUITS', reponsePHP.data)));
     },
+    setProduitsFiltre ({commit}, data) {
+        commit('SET_PRODUITS_FILTRES', data);
+    },
+    setSearch ({commit}, data) {
+        commit('SET_SEARCH', data);
+    },
 };
 
 export default actions;

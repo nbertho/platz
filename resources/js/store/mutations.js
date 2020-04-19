@@ -11,6 +11,12 @@ let mutations = {
     SET_PRODUITS_FILTERS(state, data) {
         state.produitsFiltre = data;
     },
+    SET_PRODUITS_FILTRES(state, data) {
+        state.produitsFiltre = data;
+    },
+    SET_SEARCH(state, data) {
+        state.search = data;
+    },
     
 };
 

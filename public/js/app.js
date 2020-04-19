@@ -1945,6 +1945,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1972,6 +1979,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    searchResult: function searchResult() {
+      return this.$store.getters.getSearch;
+    },
     // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
     produits: function produits() {
       var _this = this;
@@ -2186,7 +2196,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _store_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../store/index.js */ "./resources/js/store/index.js");
 //
 //
 //
@@ -2248,12 +2257,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
     changeFilterCategory: function changeFilterCategory(categoryId) {
-      this.$store.state.produitsFiltre = categoryId;
+      if (categoryId == this.$store.getters.getProduitsFiltre) {
+        this.$store.dispatch('setProduitsFiltre', 0);
+      } else {
+        this.$store.dispatch('setProduitsFiltre', categoryId);
+      }
+    },
+    searchHeader: function searchHeader(input) {
+      this.$store.dispatch('setSearch', input.target.value);
     }
   },
   computed: {
@@ -37918,67 +37933,81 @@ var render = function() {
     _c(
       "section",
       { staticClass: "container grid", attrs: { id: "products" } },
-      _vm._l(_vm.produits.slice(_vm.showStart, _vm.showAmount), function(
-        produit
-      ) {
-        return _c(
-          "article",
-          {
-            key: produit.id,
-            staticClass: "article col-xs-12 col-s-6 col-m-4 col-xl-3"
-          },
-          [
-            _c(
-              "router-link",
-              {
-                attrs: {
-                  to: {
-                    name: "produits.show",
-                    params: { produitId: produit.id }
+      [
+        _vm.searchResult != ""
+          ? _c("div", [
+              _c("h1", [
+                _vm._v(
+                  "Résultats de la recherche de : " + _vm._s(_vm.searchResult)
+                )
+              ]),
+              _vm._v(" "),
+              _c("br")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.produits.slice(_vm.showStart, _vm.showAmount), function(
+          produit
+        ) {
+          return _c(
+            "article",
+            {
+              key: produit.id,
+              staticClass: "article col-xs-12 col-s-6 col-m-4 col-xl-3"
+            },
+            [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "produits.show",
+                      params: { produitId: produit.id }
+                    }
                   }
-                }
-              },
-              [
+                },
+                [
+                  _c("figure", [
+                    _c("img", {
+                      attrs: {
+                        src:
+                          _vm.global.publicPath +
+                          "img/produits/" +
+                          produit.image +
+                          ".jpg",
+                        alt: "Wordpress theme"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("figcaption", [_vm._v(_vm._s(produit.description))])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", [
                 _c("figure", [
                   _c("img", {
                     attrs: {
                       src:
                         _vm.global.publicPath +
-                        "img/produits/" +
-                        produit.image +
-                        ".jpg",
-                      alt: "Wordpress theme"
+                        "img/categories/" +
+                        produit.categories.image +
+                        ".svg",
+                      alt: "Photoshop"
                     }
                   }),
                   _vm._v(" "),
-                  _c("figcaption", [_vm._v(_vm._s(produit.description))])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", [
-              _c("figure", [
-                _c("img", {
-                  attrs: {
-                    src:
-                      _vm.global.publicPath +
-                      "img/categories/" +
-                      produit.categories.image +
-                      ".svg",
-                    alt: "Photoshop"
-                  }
-                }),
+                  _c("figcaption")
+                ]),
                 _vm._v(" "),
-                _c("figcaption")
-              ]),
-              _vm._v(" "),
-              _c("h2", [_vm._v(_vm._s(produit.categories.nom))])
-            ])
-          ],
-          1
-        )
-      }),
-      0
+                _c("h2", [_vm._v(_vm._s(produit.categories.nom))])
+              ])
+            ],
+            1
+          )
+        })
+      ],
+      2
     ),
     _vm._v(" "),
     _c("section", { attrs: { id: "pagination" } }, [
@@ -38353,7 +38382,12 @@ var render = function() {
           _vm._v(" ")
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("form", { attrs: { action: "", method: "get" } }, [
+          _c("input", {
+            attrs: { type: "text", name: "search-header", id: "search" },
+            on: { input: _vm.searchHeader }
+          })
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -38441,57 +38475,35 @@ var render = function() {
         _vm._v(" "),
         _c(
           "ul",
-          [
-            _c("li", [
-              _c(
-                "a",
-                {
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      return _vm.changeFilterCategory(0)
-                    }
-                  }
-                },
-                [_vm._v("Tous les produits")]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.categories, function(cat) {
-              return _c("li", { key: cat.id }, [
-                _c(
-                  "a",
-                  {
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.changeFilterCategory(cat.id)
+          _vm._l(_vm.categories, function(cat) {
+            return _c(
+              "li",
+              { key: cat.id },
+              [
+                _c("router-link", { attrs: { to: "/" } }, [
+                  _c(
+                    "div",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.changeFilterCategory(cat.id)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v(_vm._s(cat.nom))]
-                )
-              ])
-            })
-          ],
-          2
+                    },
+                    [_vm._v(_vm._s(cat.nom))]
+                  )
+                ])
+              ],
+              1
+            )
+          }),
+          0
         )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", { attrs: { action: "", method: "get" } }, [
-      _c("input", {
-        attrs: { type: "search", name: "search-header", id: "search" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -55101,6 +55113,14 @@ var actions = {
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/produits').then(function (reponsePHP) {
       return commit('SET_PRODUITS', reponsePHP.data);
     });
+  },
+  setProduitsFiltre: function setProduitsFiltre(_ref4, data) {
+    var commit = _ref4.commit;
+    commit('SET_PRODUITS_FILTRES', data);
+  },
+  setSearch: function setSearch(_ref5, data) {
+    var commit = _ref5.commit;
+    commit('SET_SEARCH', data);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (actions);
@@ -55131,6 +55151,9 @@ var getters = {
   },
   getGlobalVariables: function getGlobalVariables(state) {
     return state.globalVariables;
+  },
+  getSearch: function getSearch(state) {
+    return state.search;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (getters);
@@ -55190,6 +55213,12 @@ var mutations = {
   },
   SET_PRODUITS_FILTERS: function SET_PRODUITS_FILTERS(state, data) {
     state.produitsFiltre = data;
+  },
+  SET_PRODUITS_FILTRES: function SET_PRODUITS_FILTRES(state, data) {
+    state.produitsFiltre = data;
+  },
+  SET_SEARCH: function SET_SEARCH(state, data) {
+    state.search = data;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (mutations);
@@ -55210,6 +55239,7 @@ var state = {
   pages: [],
   produits: [],
   produitsFiltre: 0,
+  search: '',
   globalVariables: {
     publicPath: 'http://localhost/projet_web_dynamique/platz/public/'
   }
