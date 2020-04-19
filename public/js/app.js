@@ -2098,8 +2098,7 @@ __webpack_require__.r(__webpack_exports__);
       return produitArray.find(function (data) {
         return data.id == _this.$route.params.produitId;
       });
-    },
-    relatedProduct: function relatedProduct() {}
+    }
   },
   created: function created() {
     var _this2 = this;
