@@ -11394,7 +11394,7 @@ main #comments form textarea {
   padding: 10px 2px 2px 10px;
 }
 
-main #comments form input {
+main #comments form input[type=submit] {
   background-color: #74BDEC;
   border-radius: 4px;
   color: #FFF;

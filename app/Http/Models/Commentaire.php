@@ -13,8 +13,7 @@ class Commentaire extends Model {
     */
     protected $table = 'commentaires';
 
-    public function produit() {
-        return $this->belongsToMany('App\Http\Models\Produit', 'produits_has_commentaires');
+    public function user() {
+        return $this->hasOne('App\Http\Models\User', 'id', 'users_id');
     }
-
 }

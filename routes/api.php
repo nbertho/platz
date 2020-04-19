@@ -24,33 +24,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     // Index
     Route::get('pages', 'PagesController@index')->name('pages.index');
 
-
 // Route des produits
 
     // Index Start
-    Route::get('produits/takeFirstTen', 'ProduitsController@takeFirstTen')->name('produits.takeFirstTen');
-
-    // Index More
-    Route::get('produits/takeAllButFirstTen', 'ProduitsController@takeAllButFirstTen')->name('produits.takeAllButFirstTen');
-
-    // Index
     Route::get('produits', 'ProduitsController@index')->name('produits.index');
-
     
 // Route des categories
 
     // Index
     Route::get('categories', 'CategoriesController@index')->name('categories.index');
-
-
-// Route des users
-
-    // show
-    Route::get('users/{id}', 'UsersController@show')->name('users.show');
-
-
-// Route des commentaires
-
-    // show
-    Route::get('commentaires/{id}', 'CommentairesController@show')->name('commentaires.show');
 

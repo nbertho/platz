@@ -5,13 +5,8 @@ let mutations = {
     SET_PAGES(state, data) {
         state.pages = data;
     },
-    SET_PRODUITS_FIRST(state, data) {
+    SET_PRODUITS(state, data) {
         state.produits = data;
-    },
-    SET_PRODUITS_MORE(state, data) {
-        data.forEach(item => {
-            state.produits.push(item);
-        });
     },
     SET_PRODUITS_FILTERS(state, data) {
         state.produitsFiltre = data;

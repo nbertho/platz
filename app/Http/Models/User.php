@@ -12,4 +12,8 @@ class User extends Model {
     */
     protected $table = 'users';
 
+    public function commentaires() {
+        return $this->belongsTo('App\Http\Models\Commentaire');
+    }
+
 }
