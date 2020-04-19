@@ -96,6 +96,8 @@
                         }
                     });
                 }
+                this.showStart = 0;
+                this.showAmount = 20;
                 return arrayToReturn;
             },
             // Va chercher les variables globalVariables du store
