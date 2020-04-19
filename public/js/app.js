@@ -1992,8 +1992,10 @@ __webpack_require__.r(__webpack_exports__);
       if (filtreSearch != '') {
         produitsArray.forEach(function (produit) {
           var lowercaseName = produit.nom.toLowerCase();
+          var lowercaseAuthor = produit.user.nom.toLowerCase();
+          var lowercaseText = produit.description.toLowerCase();
 
-          if (lowercaseName.includes(filtreSearch.toLowerCase())) {
+          if (lowercaseName.includes(filtreSearch.toLowerCase()) || lowercaseAuthor.includes(filtreSearch.toLowerCase()) || lowercaseText.includes(filtreSearch.toLowerCase())) {
             arrayToReturn.push(produit);
           }
         });

@@ -82,7 +82,9 @@
                 if (filtreSearch != '') {
                     produitsArray.forEach(produit => {
                         let lowercaseName = produit.nom.toLowerCase();
-                        if (lowercaseName.includes(filtreSearch.toLowerCase())) {
+                        let lowercaseAuthor = produit.user.nom.toLowerCase();
+                        let lowercaseText = produit.description.toLowerCase();
+                        if (lowercaseName.includes(filtreSearch.toLowerCase()) || lowercaseAuthor.includes(filtreSearch.toLowerCase()) || lowercaseText.includes(filtreSearch.toLowerCase())) {
                             arrayToReturn.push(produit);
                         }
                     });
