@@ -66,8 +66,8 @@
 
     <h1 class="logo-accueil">burstfly</h1>
 
-  </main>
-              
+  </main>      
+       
 </template>
 
 <script>

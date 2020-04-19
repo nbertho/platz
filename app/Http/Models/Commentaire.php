@@ -16,4 +16,5 @@ class Commentaire extends Model {
     public function user() {
         return $this->hasOne('App\Http\Models\User', 'id', 'users_id');
     }
+    
 }
