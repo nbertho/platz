@@ -65,7 +65,7 @@ import store from '../../store/index.js';
         methods: {
             // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
             changeFilterCategory(categoryId) {
-                store.state.produitsFiltre = categoryId;
+                this.$store.state.produitsFiltre = categoryId;
             }
         },
         computed: {

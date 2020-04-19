@@ -39,6 +39,6 @@ const app = new Vue({
     created() {
         this.$store.dispatch('setCategories');
         this.$store.dispatch('setPages');
-        this.$store.dispatch('setProduitsFirst');
-    }
+        this.$store.dispatch('setProduits');
+    },
 });

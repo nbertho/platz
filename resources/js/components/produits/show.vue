@@ -38,12 +38,13 @@
 
       <section id="comments" class="container-individual">
         <h2>Your comments</h2>
-        <article v-for="commentaire in commentaires" :key="commentaire.id">
-          <h3>{{ commentaire.nom }}</h3>
+        <article v-for="commentaire in produit.commentaires" :key="commentaire.id">
+          <h3>{{ commentaire.user.nom }}</h3>
           <p>{{ commentaire.texte }}</p>
         </article>
         <form action="">
           <h2>Add your comment</h2>
+          <input type="text" value="Votre pseudo">
           <textarea placeholder="Votre Message" name="message" rows="4" cols="30" maxlength="500"></textarea>
           <input type="submit" value="Envoyer">
         </form>
@@ -72,31 +73,47 @@
 <script>
     import Axios from "axios";
     export default {
-        data() {
-            return {
-                commentaires: [],
+      /*
+      data() {
+          return {
+              relatedProducts: [],
+          }
+      },
+      */
+      computed: {
+        // Va chercher les variables globalVariables du store
+        global() {
+            return this.$store.getters.getGlobalVariables
+        },
+        // Va chercher le produit ayant l'id presente dans l'url dans le store
+        produit() {
+          let produitsArray =  this.$store.getters.getProduits;
+          return produitsArray.find(data => data.id == this.$route.params.produitId);
+        },
+        relatedProducts() {
+          let produitsArray =  this.$store.getters.getProduits;
+          let arrayToReturn = [];
+          if (arrayToReturn.length < 4) {
+            produitsArray.forEach(item => {
+              console.log('ID cat: ' + this.produit.categories_id + ' id produit: ' + item.id + ' Id cat item :  ' + item.categories_id)
+              /*
+              if (item.categories_id == this.produit.categories_id) {
+                arrayToReturn.push(item);
+              }
+              */
+            });
+          }
+          else {
+            return arrayToReturn;
+          }
+          /*
+          produitsArray.forEach(item => {
+            if (item.categories_id == this.produit.categories_id) {
+              arrayToReturn.push(item);
             }
-        },
-        computed: {
-            global() {
-                return this.$store.getters.getGlobalVariables
-            },
-            produit() {
-                let produitArray =  this.$store.getters.getProduits;
-                return produitArray.find(data => data.id == this.$route.params.produitId);
-            },
-        },
-        created() {
-            // Charger le produit si il n'est pas présent dans le store
-            if (this.$store.getters.getProduits.find(data => data.id == this.$route.params.produitId) == undefined) {
-                this.$store.dispatch('setProduitsMore');
-            }
-
-            // Charger les commentaires
-            let url = 'api/commentaires/' + this.$route.params.produitId;
-            Axios.get(url)
-                .then(reponsePHP => (this.commentaires = reponsePHP.data));
-
-        },
+          });
+          */
+        }
+      },
     }
 </script>

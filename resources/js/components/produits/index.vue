@@ -55,6 +55,13 @@
                 this.showAmount = this.showAmount - 20
             }
         },
+        beforeUpdate() {
+            // Empeche l'affichage du nombre de produit de descendre en dessous de 0
+            if ( this.showStart < 0) {
+                this.showStart = 0;
+                this.showAmount = 20;
+            }
+        },
         computed: {
             // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
             produits() {
@@ -71,17 +78,6 @@
             global() {
                 return this.$store.getters.getGlobalVariables
             },
-            // Empeche l'affichage du nombre de produit de descendre en dessous de 0
-            setPagination() {
-                if ( this.showStart < 0) {
-                    this.showStart = 0;
-                    this.showAmount = 20;
-                }
-            }
         },
-        // Va chercher le reste des produits une fois le composant monté
-        mounted() {
-            this.$store.dispatch('setProduitsMore');
-        }
     };
 </script>

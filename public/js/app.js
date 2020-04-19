@@ -1964,6 +1964,13 @@ __webpack_require__.r(__webpack_exports__);
       this.showAmount = this.showAmount - 20;
     }
   },
+  beforeUpdate: function beforeUpdate() {
+    // Empeche l'affichage du nombre de produit de descendre en dessous de 0
+    if (this.showStart < 0) {
+      this.showStart = 0;
+      this.showAmount = 20;
+    }
+  },
   computed: {
     // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
     produits: function produits() {
@@ -1981,18 +1988,7 @@ __webpack_require__.r(__webpack_exports__);
     // Va chercher les variables globalVariables du store
     global: function global() {
       return this.$store.getters.getGlobalVariables;
-    },
-    // Empeche l'affichage du nombre de produit de descendre en dessous de 0
-    setPagination: function setPagination() {
-      if (this.showStart < 0) {
-        this.showStart = 0;
-        this.showAmount = 20;
-      }
     }
-  },
-  // Va chercher le reste des produits une fois le composant monté
-  mounted: function mounted() {
-    this.$store.dispatch('setProduitsMore');
   }
 });
 
@@ -2080,41 +2076,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      commentaires: []
-    };
+  /*
+  data() {
+      return {
+          relatedProducts: [],
+      }
   },
+  */
   computed: {
+    // Va chercher les variables globalVariables du store
     global: function global() {
       return this.$store.getters.getGlobalVariables;
     },
+    // Va chercher le produit ayant l'id presente dans l'url dans le store
     produit: function produit() {
       var _this = this;
 
-      var produitArray = this.$store.getters.getProduits;
-      return produitArray.find(function (data) {
+      var produitsArray = this.$store.getters.getProduits;
+      return produitsArray.find(function (data) {
         return data.id == _this.$route.params.produitId;
       });
+    },
+    relatedProducts: function relatedProducts() {
+      var _this2 = this;
+
+      var produitsArray = this.$store.getters.getProduits;
+      var arrayToReturn = [];
+
+      if (arrayToReturn.length < 4) {
+        produitsArray.forEach(function (item) {
+          console.log('ID cat: ' + _this2.produit.categories_id + ' id produit: ' + item.id + ' Id cat item :  ' + item.categories_id);
+          /*
+          if (item.categories_id == this.produit.categories_id) {
+            arrayToReturn.push(item);
+          }
+          */
+        });
+      } else {
+        return arrayToReturn;
+      }
+      /*
+      produitsArray.forEach(item => {
+        if (item.categories_id == this.produit.categories_id) {
+          arrayToReturn.push(item);
+        }
+      });
+      */
+
     }
-  },
-  created: function created() {
-    var _this2 = this;
-
-    // Charger le produit si il n'est pas présent dans le store
-    if (this.$store.getters.getProduits.find(function (data) {
-      return data.id == _this2.$route.params.produitId;
-    }) == undefined) {
-      this.$store.dispatch('setProduitsMore');
-    } // Charger les commentaires
-
-
-    var url = 'api/commentaires/' + this.$route.params.produitId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (reponsePHP) {
-      return _this2.commentaires = reponsePHP.data;
-    });
   }
 });
 
@@ -2262,7 +2274,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
     changeFilterCategory: function changeFilterCategory(categoryId) {
-      _store_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].state.produitsFiltre = categoryId;
+      this.$store.state.produitsFiltre = categoryId;
     }
   },
   computed: {
@@ -38139,9 +38151,9 @@ var render = function() {
         [
           _c("h2", [_vm._v("Your comments")]),
           _vm._v(" "),
-          _vm._l(_vm.commentaires, function(commentaire) {
+          _vm._l(_vm.produit.commentaires, function(commentaire) {
             return _c("article", { key: commentaire.id }, [
-              _c("h3", [_vm._v(_vm._s(commentaire.nom))]),
+              _c("h3", [_vm._v(_vm._s(commentaire.user.nom))]),
               _vm._v(" "),
               _c("p", [_vm._v(_vm._s(commentaire.texte))])
             ])
@@ -38207,6 +38219,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("form", { attrs: { action: "" } }, [
       _c("h2", [_vm._v("Add your comment")]),
+      _vm._v(" "),
+      _c("input", { attrs: { type: "text", value: "Votre pseudo" } }),
       _vm._v(" "),
       _c("textarea", {
         attrs: {
@@ -54712,7 +54726,7 @@ var app = new Vue({
   created: function created() {
     this.$store.dispatch('setCategories');
     this.$store.dispatch('setPages');
-    this.$store.dispatch('setProduitsFirst');
+    this.$store.dispatch('setProduits');
   }
 });
 
@@ -55102,18 +55116,11 @@ var actions = {
       return commit('SET_PAGES', reponsePHP.data);
     });
   },
-  setProduitsFirst: function setProduitsFirst(_ref3) {
+  setProduits: function setProduits(_ref3) {
     var commit = _ref3.commit;
     // Transaction
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/produits/takeFirstTen').then(function (reponsePHP) {
-      return commit('SET_PRODUITS_FIRST', reponsePHP.data);
-    });
-  },
-  setProduitsMore: function setProduitsMore(_ref4) {
-    var commit = _ref4.commit;
-    // Transaction
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/produits/takeAllButFirstTen').then(function (reponsePHP) {
-      return commit('SET_PRODUITS_MORE', reponsePHP.data);
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/produits').then(function (reponsePHP) {
+      return commit('SET_PRODUITS', reponsePHP.data);
     });
   }
 };
@@ -55199,13 +55206,8 @@ var mutations = {
   SET_PAGES: function SET_PAGES(state, data) {
     state.pages = data;
   },
-  SET_PRODUITS_FIRST: function SET_PRODUITS_FIRST(state, data) {
+  SET_PRODUITS: function SET_PRODUITS(state, data) {
     state.produits = data;
-  },
-  SET_PRODUITS_MORE: function SET_PRODUITS_MORE(state, data) {
-    data.forEach(function (item) {
-      state.produits.push(item);
-    });
   },
   SET_PRODUITS_FILTERS: function SET_PRODUITS_FILTERS(state, data) {
     state.produitsFiltre = data;
