@@ -1,17 +1,84 @@
 <template>
-    <ul>
-        <li v-for="produit in produits" :key="produit.id">
-            <router-link :to="{ name: 'produits.show', params: { produitId: produit.id }}">{{ produit.nom }}</router-link>
-        </li>
-    </ul>
+    
+<main>
+
+        <!-- Articles -->
+        <section id="products" class="container grid">
+
+            <article class="article col-xs-12 col-s-6 col-m-4 col-xl-3" v-for="produit in produits.slice(showStart, showAmount)" :key="produit.id">
+                <router-link :to="{ name: 'produits.show', params: {produitId: produit.id } }">
+                    <figure>
+                        <img :src="global.publicPath + 'img/produits/' + produit.image + '.jpg'" alt="Wordpress theme">
+                        <figcaption>{{produit.description}}</figcaption>
+                    </figure>
+                </router-link>
+                <div>
+                    <figure>
+                        <img :src="global.publicPath + 'img/categories/'+ produit.categories.image + '.svg'" alt="Photoshop">
+                        <figcaption></figcaption>
+                    </figure>
+                    <h2>{{ produit.categories.nom }}</h2>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- PAGINATE -->
+        <section id="pagination">
+            <a href="#" @click="showLess"><img :src="global.publicPath + 'img/autres/prev.svg'" alt="Previous"></a>
+            <a href="#" @click="showMore"><img :src="global.publicPath + 'img/autres/next.svg'" alt="Next"></a>
+        </section>
+
+        <h1 class="logo-accueil">platz</h1>
+
+    </main>
+
 </template>
 
 <script>
     export default {
-        computed: {
-            produits() {
-                return this.$store.getters.getProduits
+        data () {
+            return {
+                showStart: 0,
+                showAmount: 20,
             }
         },
-    }
+        methods: {
+            showMore: function() {
+                this.showStart = this.showStart + 20
+                this.showAmount = this.showAmount + 20
+            },
+            showLess: function() {
+                this.showStart = this.showStart - 20
+                this.showAmount = this.showAmount - 20
+            }
+        },
+        computed: {
+            produits() {
+                let produits =  this.$store.getters.getProduits;
+                let arrayToReturn = [];
+                produits.forEach(produit => {
+                    if (produit.categories_id == this.$store.getters.getProduitsFiltre || this.$store.getters.getProduitsFiltre == 0) {
+                        arrayToReturn.push(produit);
+                    }
+                });
+                return arrayToReturn;
+            },
+            filter() {
+                return this.$store.getters.getProduitsFiltre
+            },
+            global() {
+                return this.$store.getters.getGlobalVariables
+            },
+            setPagination() {
+                if ( this.showStart < 0) {
+                    this.showStart = 0;
+                    this.showAmount = 20;
+                }
+            }
+        },
+        mounted() {
+            this.$store.dispatch('setProduitsMore');
+        }
+    };
 </script>
