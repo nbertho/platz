@@ -1984,15 +1984,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
     produits: function produits() {
-      var _this = this;
-
-      var produits = this.$store.getters.getProduits;
+      var produitsArray = this.$store.getters.getProduits;
+      var filtreCategories = this.$store.getters.getProduitsFiltre;
+      var filtreSearch = this.$store.getters.getSearch;
       var arrayToReturn = [];
-      produits.forEach(function (produit) {
-        if (produit.categories_id == _this.$store.getters.getProduitsFiltre || _this.$store.getters.getProduitsFiltre == 0) {
-          arrayToReturn.push(produit);
-        }
-      });
+
+      if (filtreSearch != '') {
+        produitsArray.forEach(function (produit) {
+          var lowercaseName = produit.nom.toLowerCase();
+
+          if (lowercaseName.includes(filtreSearch.toLowerCase())) {
+            arrayToReturn.push(produit);
+          }
+        });
+      } else {
+        produitsArray.forEach(function (produit) {
+          if (produit.categories_id == filtreCategories || filtreCategories == 0) {
+            arrayToReturn.push(produit);
+          }
+        });
+      }
+
       return arrayToReturn;
     },
     // Va chercher les variables globalVariables du store
@@ -2196,10 +2208,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -38395,15 +38403,15 @@ var render = function() {
       _c("div", { staticClass: "container" }, [
         _c(
           "ul",
-          [
-            _c("li", [
+          _vm._l(_vm.categories, function(cat) {
+            return _c("li", { key: cat.id }, [
               _c(
                 "a",
                 {
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
-                      return _vm.changeFilterCategory(0)
+                      return _vm.changeFilterCategory(cat.id)
                     }
                   }
                 },
@@ -38412,48 +38420,19 @@ var render = function() {
                     _c("img", {
                       attrs: {
                         src:
-                          _vm.global.publicPath + "img/categories/icon-all.svg",
-                        alt: "Toutes les categories",
-                        width: "28px",
-                        height: "28px"
+                          _vm.global.publicPath +
+                          "img/categories/" +
+                          cat.image +
+                          ".svg",
+                        alt: cat.nom
                       }
                     })
                   ])
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.categories, function(cat) {
-              return _c("li", { key: cat.id }, [
-                _c(
-                  "a",
-                  {
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        return _vm.changeFilterCategory(cat.id)
-                      }
-                    }
-                  },
-                  [
-                    _c("figure", [
-                      _c("img", {
-                        attrs: {
-                          src:
-                            _vm.global.publicPath +
-                            "img/categories/" +
-                            cat.image +
-                            ".svg",
-                          alt: cat.nom
-                        }
-                      })
-                    ])
-                  ]
-                )
-              ])
-            })
-          ],
-          2
+            ])
+          }),
+          0
         )
       ])
     ]),
@@ -38475,29 +38454,43 @@ var render = function() {
         _vm._v(" "),
         _c(
           "ul",
-          _vm._l(_vm.categories, function(cat) {
-            return _c(
+          [
+            _c(
               "li",
-              { key: cat.id },
-              [
-                _c("router-link", { attrs: { to: "/" } }, [
-                  _c(
-                    "div",
-                    {
-                      on: {
-                        click: function($event) {
-                          return _vm.changeFilterCategory(cat.id)
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.changeFilterCategory(0)
+                  }
+                }
+              },
+              [_vm._v("Toutes les categories")]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.categories, function(cat) {
+              return _c(
+                "li",
+                { key: cat.id },
+                [
+                  _c("router-link", { attrs: { to: "/" } }, [
+                    _c(
+                      "div",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.changeFilterCategory(cat.id)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v(_vm._s(cat.nom))]
-                  )
-                ])
-              ],
-              1
-            )
-          }),
-          0
+                      },
+                      [_vm._v(_vm._s(cat.nom))]
+                    )
+                  ])
+                ],
+                1
+              )
+            })
+          ],
+          2
         )
       ])
     ])

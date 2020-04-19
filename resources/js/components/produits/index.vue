@@ -75,13 +75,25 @@
             },
             // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
             produits() {
-                let produits =  this.$store.getters.getProduits;
+                let produitsArray =  this.$store.getters.getProduits;
+                let filtreCategories = this.$store.getters.getProduitsFiltre;
+                let filtreSearch =  this.$store.getters.getSearch;
                 let arrayToReturn = [];
-                produits.forEach(produit => {
-                    if (produit.categories_id == this.$store.getters.getProduitsFiltre || this.$store.getters.getProduitsFiltre == 0) {
-                        arrayToReturn.push(produit);
-                    }
-                });
+                if (filtreSearch != '') {
+                    produitsArray.forEach(produit => {
+                        let lowercaseName = produit.nom.toLowerCase();
+                        if (lowercaseName.includes(filtreSearch.toLowerCase())) {
+                            arrayToReturn.push(produit);
+                        }
+                    });
+                }
+                else {
+                    produitsArray.forEach(produit => {
+                        if (produit.categories_id == filtreCategories || filtreCategories == 0) {
+                            arrayToReturn.push(produit);
+                        }
+                    });
+                }
                 return arrayToReturn;
             },
             // Va chercher les variables globalVariables du store

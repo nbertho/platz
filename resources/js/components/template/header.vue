@@ -23,11 +23,6 @@
         <section id="filters-desktop">
             <div class="container">
                 <ul>
-                    <li>
-                        <a href="#" v-on:click="changeFilterCategory(0)">
-                            <figure><img :src="global.publicPath + 'img/categories/icon-all.svg'" alt="Toutes les categories" width="28px" height="28px"></figure>
-                        </a>
-                    </li>
                     <li v-for="cat in categories" :key="cat.id">
                         <a href="#" v-on:click="changeFilterCategory(cat.id)">
                             <figure><img :src="global.publicPath + 'img/categories/' + cat.image + '.svg'" :alt="cat.nom" ></figure>
@@ -46,6 +41,7 @@
                     <img :src="global.publicPath + 'img/autres/small-logo.svg'" alt="Burstfly">
                 </figure>
                 <ul>
+                    <li v-on:click="changeFilterCategory(0)">Toutes les categories</li>
                     <li v-for="cat in categories" :key="cat.id">
                         <router-link to="/">
                             <div v-on:click="changeFilterCategory(cat.id)">{{cat.nom}}</div>
