@@ -2079,13 +2079,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  /*
-  data() {
-      return {
-          relatedProducts: [],
-      }
-  },
-  */
   computed: {
     // Va chercher les variables globalVariables du store
     global: function global() {
@@ -2100,32 +2093,18 @@ __webpack_require__.r(__webpack_exports__);
         return data.id == _this.$route.params.produitId;
       });
     },
+    // Trouve les produits etant dans la meme categories que le produit affiche
     relatedProducts: function relatedProducts() {
       var _this2 = this;
 
       var produitsArray = this.$store.getters.getProduits;
       var arrayToReturn = [];
-
-      if (arrayToReturn.length < 4) {
-        produitsArray.forEach(function (item) {
-          console.log('ID cat: ' + _this2.produit.categories_id + ' id produit: ' + item.id + ' Id cat item :  ' + item.categories_id);
-          /*
-          if (item.categories_id == this.produit.categories_id) {
-            arrayToReturn.push(item);
-          }
-          */
-        });
-      } else {
-        return arrayToReturn;
-      }
-      /*
-      produitsArray.forEach(item => {
-        if (item.categories_id == this.produit.categories_id) {
+      produitsArray.forEach(function (item) {
+        if (arrayToReturn.length < 4 && item.categories_id == _this2.produit.categories_id) {
           arrayToReturn.push(item);
         }
       });
-      */
-
+      return arrayToReturn;
     }
   }
 });

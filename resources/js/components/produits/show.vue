@@ -73,13 +73,6 @@
 <script>
     import Axios from "axios";
     export default {
-      /*
-      data() {
-          return {
-              relatedProducts: [],
-          }
-      },
-      */
       computed: {
         // Va chercher les variables globalVariables du store
         global() {
@@ -90,29 +83,16 @@
           let produitsArray =  this.$store.getters.getProduits;
           return produitsArray.find(data => data.id == this.$route.params.produitId);
         },
+        // Trouve les produits etant dans la meme categories que le produit affiche
         relatedProducts() {
           let produitsArray =  this.$store.getters.getProduits;
           let arrayToReturn = [];
-          if (arrayToReturn.length < 4) {
-            produitsArray.forEach(item => {
-              console.log('ID cat: ' + this.produit.categories_id + ' id produit: ' + item.id + ' Id cat item :  ' + item.categories_id)
-              /*
-              if (item.categories_id == this.produit.categories_id) {
-                arrayToReturn.push(item);
-              }
-              */
-            });
-          }
-          else {
-            return arrayToReturn;
-          }
-          /*
           produitsArray.forEach(item => {
-            if (item.categories_id == this.produit.categories_id) {
+            if (arrayToReturn.length < 4 && item.categories_id == this.produit.categories_id) {
               arrayToReturn.push(item);
             }
           });
-          */
+          return arrayToReturn;
         }
       },
     }
