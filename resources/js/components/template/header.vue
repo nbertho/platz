@@ -7,7 +7,7 @@
             <div class="container">
                 <div>
                     <router-link :to="{ name: 'index'}">
-                        <figure>
+                        <figure v-on:click="changeFilterCategory(0)">
                             <img :src="global.publicPath + 'img/autres/logo-burst.png'" alt="Logo Platz">
                         </figure>
                     </router-link>
@@ -23,6 +23,11 @@
         <section id="filters-desktop">
             <div class="container">
                 <ul>
+                    <li>
+                        <a href="#" v-on:click="changeFilterCategory(0)">
+                            <figure><img :src="global.publicPath + 'img/categories/icon-all.svg'" alt="Toutes les categories" width="28px" height="28px"></figure>
+                        </a>
+                    </li>
                     <li v-for="cat in categories" :key="cat.id">
                         <a href="#" v-on:click="changeFilterCategory(cat.id)">
                             <figure><img :src="global.publicPath + 'img/categories/' + cat.image + '.svg'" :alt="cat.nom" ></figure>
@@ -58,20 +63,20 @@
 import store from '../../store/index.js';
     export default {
         methods: {
+            // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
             changeFilterCategory(categoryId) {
                 store.state.produitsFiltre = categoryId;
             }
         },
         computed: {
+            // Va chercher les variables globalVariables du store
             global() {
                 return this.$store.getters.getGlobalVariables
             },
+            // Va chercher les variables categories du store
             categories() {
                 return this.$store.getters.getCategories
             },
-            filtre() {
-                return this.$store.getters.getProduitsFiltre
-            }
         },
     }
 </script>

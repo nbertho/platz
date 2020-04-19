@@ -1953,16 +1953,19 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // Affiche les 20 produits suivants
     showMore: function showMore() {
       this.showStart = this.showStart + 20;
       this.showAmount = this.showAmount + 20;
     },
+    // Affiche les 20 produits précédants
     showLess: function showLess() {
       this.showStart = this.showStart - 20;
       this.showAmount = this.showAmount - 20;
     }
   },
   computed: {
+    // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
     produits: function produits() {
       var _this = this;
 
@@ -1975,12 +1978,11 @@ __webpack_require__.r(__webpack_exports__);
       });
       return arrayToReturn;
     },
-    filter: function filter() {
-      return this.$store.getters.getProduitsFiltre;
-    },
+    // Va chercher les variables globalVariables du store
     global: function global() {
       return this.$store.getters.getGlobalVariables;
     },
+    // Empeche l'affichage du nombre de produit de descendre en dessous de 0
     setPagination: function setPagination() {
       if (this.showStart < 0) {
         this.showStart = 0;
@@ -1988,6 +1990,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  // Va chercher le reste des produits une fois le composant monté
   mounted: function mounted() {
     this.$store.dispatch('setProduitsMore');
   }
@@ -2250,22 +2253,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
+    // Change le filtrage de la page d'accueil dans le store en l'id de la categorie (ou 0 pour toutes les categories)
     changeFilterCategory: function changeFilterCategory(categoryId) {
       _store_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].state.produitsFiltre = categoryId;
     }
   },
   computed: {
+    // Va chercher les variables globalVariables du store
     global: function global() {
       return this.$store.getters.getGlobalVariables;
     },
+    // Va chercher les variables categories du store
     categories: function categories() {
       return this.$store.getters.getCategories;
-    },
-    filtre: function filtre() {
-      return this.$store.getters.getProduitsFiltre;
     }
   }
 });
@@ -38326,14 +38334,24 @@ var render = function() {
           "div",
           [
             _c("router-link", { attrs: { to: { name: "index" } } }, [
-              _c("figure", [
-                _c("img", {
-                  attrs: {
-                    src: _vm.global.publicPath + "img/autres/logo-burst.png",
-                    alt: "Logo Platz"
+              _c(
+                "figure",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.changeFilterCategory(0)
+                    }
                   }
-                })
-              ])
+                },
+                [
+                  _c("img", {
+                    attrs: {
+                      src: _vm.global.publicPath + "img/autres/logo-burst.png",
+                      alt: "Logo Platz"
+                    }
+                  })
+                ]
+              )
             ])
           ],
           1
@@ -38351,15 +38369,15 @@ var render = function() {
       _c("div", { staticClass: "container" }, [
         _c(
           "ul",
-          _vm._l(_vm.categories, function(cat) {
-            return _c("li", { key: cat.id }, [
+          [
+            _c("li", [
               _c(
                 "a",
                 {
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
-                      return _vm.changeFilterCategory(cat.id)
+                      return _vm.changeFilterCategory(0)
                     }
                   }
                 },
@@ -38368,19 +38386,48 @@ var render = function() {
                     _c("img", {
                       attrs: {
                         src:
-                          _vm.global.publicPath +
-                          "img/categories/" +
-                          cat.image +
-                          ".svg",
-                        alt: cat.nom
+                          _vm.global.publicPath + "img/categories/icon-all.svg",
+                        alt: "Toutes les categories",
+                        width: "28px",
+                        height: "28px"
                       }
                     })
                   ])
                 ]
               )
-            ])
-          }),
-          0
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.categories, function(cat) {
+              return _c("li", { key: cat.id }, [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.changeFilterCategory(cat.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("figure", [
+                      _c("img", {
+                        attrs: {
+                          src:
+                            _vm.global.publicPath +
+                            "img/categories/" +
+                            cat.image +
+                            ".svg",
+                          alt: cat.nom
+                        }
+                      })
+                    ])
+                  ]
+                )
+              ])
+            })
+          ],
+          2
         )
       ])
     ]),

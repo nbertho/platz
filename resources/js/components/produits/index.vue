@@ -44,16 +44,19 @@
             }
         },
         methods: {
+            // Affiche les 20 produits suivants
             showMore: function() {
                 this.showStart = this.showStart + 20
                 this.showAmount = this.showAmount + 20
             },
+            // Affiche les 20 produits précédants
             showLess: function() {
                 this.showStart = this.showStart - 20
                 this.showAmount = this.showAmount - 20
             }
         },
         computed: {
+            // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
             produits() {
                 let produits =  this.$store.getters.getProduits;
                 let arrayToReturn = [];
@@ -64,12 +67,11 @@
                 });
                 return arrayToReturn;
             },
-            filter() {
-                return this.$store.getters.getProduitsFiltre
-            },
+            // Va chercher les variables globalVariables du store
             global() {
                 return this.$store.getters.getGlobalVariables
             },
+            // Empeche l'affichage du nombre de produit de descendre en dessous de 0
             setPagination() {
                 if ( this.showStart < 0) {
                     this.showStart = 0;
@@ -77,6 +79,7 @@
                 }
             }
         },
+        // Va chercher le reste des produits une fois le composant monté
         mounted() {
             this.$store.dispatch('setProduitsMore');
         }
