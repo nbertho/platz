@@ -35,3 +35,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     // Index
     Route::get('categories', 'CategoriesController@index')->name('categories.index');
 
+
+// Route des commentaires
+
+    // Index
+    Route::put('commentaires/create', 'CommentairesController@create')->name('commentaires.create');

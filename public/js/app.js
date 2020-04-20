@@ -2103,8 +2103,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      commentaire: '',
+      commentaireAdded: [],
+      commentaireAddedAmount: 0
+    };
+  },
   computed: {
     // Va chercher les variables globalVariables du store
     global: function global() {
@@ -2131,6 +2141,33 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       return arrayToReturn;
+    }
+  },
+  methods: {
+    // Ajoute un commentaire à la db et un "faux" commentaire a la suite (Vu qu'il n'y a pas de connexion à faire, l'utilisateur sera ici toujours l'utilisateur avec l'id 1 )
+    submitForm: function submitForm() {
+      var _this3 = this;
+
+      // Si le formulaire n'est pas vide
+      if (this.commentaire != '') {
+        var data = {
+          texte: this.commentaire,
+          userId: 1,
+          produitId: this.produit.id
+        }; // Requete axios
+
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('api/commentaires/create', data).then(function (reponsePHP) {
+          _this3.commentaire = '';
+          var fakeComment = {
+            user: 'John Doe',
+            texte: data.texte
+          };
+
+          _this3.commentaireAdded.push(fakeComment);
+        });
+      } else {
+        alert('Vous ne pouvez pas publier de commentaire vide');
+      }
     }
   }
 });
@@ -38185,7 +38222,63 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._l(_vm.commentaireAdded, function(comment) {
+            return _c("article", { key: comment.id }, [
+              _c("h3", [_vm._v(_vm._s(comment.user))]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(comment.texte))])
+            ])
+          }),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                }
+              }
+            },
+            [
+              _c("h2", [_vm._v("Add your comment")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.commentaire,
+                    expression: "commentaire"
+                  }
+                ],
+                attrs: {
+                  placeholder: "Votre Message",
+                  name: "message",
+                  rows: "4",
+                  cols: "30",
+                  maxlength: "500"
+                },
+                domProps: { value: _vm.commentaire },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.commentaire = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "submit", value: "Envoyer" },
+                on: {
+                  click: function($event) {
+                    return _vm.submitForm()
+                  }
+                }
+              })
+            ]
+          )
         ],
         2
       ),
@@ -38238,30 +38331,7 @@ var render = function() {
     _c("h1", { staticClass: "logo-accueil" }, [_vm._v("burstfly")])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", { attrs: { action: "" } }, [
-      _c("h2", [_vm._v("Add your comment")]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "text", value: "Votre pseudo" } }),
-      _vm._v(" "),
-      _c("textarea", {
-        attrs: {
-          placeholder: "Votre Message",
-          name: "message",
-          rows: "4",
-          cols: "30",
-          maxlength: "500"
-        }
-      }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "submit", value: "Envoyer" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

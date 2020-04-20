@@ -42,11 +42,14 @@
           <h3>{{ commentaire.user.nom }}</h3>
           <p>{{ commentaire.texte }}</p>
         </article>
-        <form action="">
+        <article v-for="comment in commentaireAdded" :key="comment.id">
+          <h3>{{ comment.user }}</h3>
+          <p>{{ comment.texte }}</p>
+        </article>
+        <form v-on:submit.prevent>
           <h2>Add your comment</h2>
-          <input type="text" value="Votre pseudo">
-          <textarea placeholder="Votre Message" name="message" rows="4" cols="30" maxlength="500"></textarea>
-          <input type="submit" value="Envoyer">
+          <textarea v-model="commentaire" placeholder="Votre Message" name="message" rows="4" cols="30" maxlength="500"></textarea>
+          <input type="submit" value="Envoyer" @click="submitForm()">
         </form>
       </section>
 
@@ -73,6 +76,13 @@
 <script>
     import Axios from "axios";
     export default {
+      data() {
+        return {
+          commentaire: '',
+          commentaireAdded: [],
+          commentaireAddedAmount: 0
+        }
+      },
       computed: {
         // Va chercher les variables globalVariables du store
         global() {
@@ -95,5 +105,29 @@
           return arrayToReturn;
         }
       },
+      methods: {
+        // Ajoute un commentaire à la db et un "faux" commentaire a la suite (Vu qu'il n'y a pas de connexion à faire, l'utilisateur sera ici toujours l'utilisateur avec l'id 1 )
+        submitForm() {
+          // Si le formulaire n'est pas vide
+          if (this.commentaire != '') {
+            let data = { texte: this.commentaire,
+                          userId: 1, 
+                          produitId: this.produit.id,};
+            // Requete axios
+            Axios.put('api/commentaires/create', data)
+              .then(reponsePHP => {
+                this.commentaire = '';
+                let fakeComment = {
+                  user: 'John Doe',
+                  texte: data.texte
+                }
+                this.commentaireAdded.push(fakeComment);
+              });
+          }
+          else {
+            alert('Vous ne pouvez pas publier de commentaire vide')
+          }
+        }
+      }
     }
 </script>

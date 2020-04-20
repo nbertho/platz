@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Produit as ProduitsMdl;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Controller des produits
