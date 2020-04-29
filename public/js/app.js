@@ -1984,32 +1984,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Sélectionne les produits correspondant à la categorie envoyée par le header dans le store
     produits: function produits() {
-      var produitsArray = this.$store.getters.getProduits;
-      var filtreCategories = this.$store.getters.getProduitsFiltre;
-      var filtreSearch = this.$store.getters.getSearch;
-      var arrayToReturn = [];
-
-      if (filtreSearch != '') {
-        produitsArray.forEach(function (produit) {
-          var lowercaseName = produit.nom.toLowerCase();
-          var lowercaseAuthor = produit.user.nom.toLowerCase();
-          var lowercaseText = produit.description.toLowerCase();
-
-          if (lowercaseName.includes(filtreSearch.toLowerCase()) || lowercaseAuthor.includes(filtreSearch.toLowerCase()) || lowercaseText.includes(filtreSearch.toLowerCase())) {
-            arrayToReturn.push(produit);
-          }
-        });
-      } else {
-        produitsArray.forEach(function (produit) {
-          if (produit.categories_id == filtreCategories || filtreCategories == 0) {
-            arrayToReturn.push(produit);
-          }
-        });
-      }
-
+      return this.$store.getters.getProduitsFilterd;
       this.showStart = 0;
       this.showAmount = 20;
-      return arrayToReturn;
     },
     // Va chercher les variables globalVariables du store
     global: function global() {
@@ -55214,6 +55191,29 @@ var getters = {
   },
   getProduits: function getProduits(state) {
     return state.produits;
+  },
+  getProduitsFilterd: function getProduitsFilterd(state) {
+    var arrayToReturn = [];
+
+    if (state.search != '') {
+      state.produits.forEach(function (produit) {
+        var lowercaseName = produit.nom.toLowerCase();
+        var lowercaseAuthor = produit.user.nom.toLowerCase();
+        var lowercaseText = produit.description.toLowerCase();
+
+        if (lowercaseName.includes(state.search.toLowerCase()) || lowercaseAuthor.includes(state.search.toLowerCase()) || lowercaseText.includes(state.search.toLowerCase())) {
+          arrayToReturn.push(produit);
+        }
+      });
+    } else {
+      state.produits.forEach(function (produit) {
+        if (produit.categories_id == state.produitsFiltre || state.produitsFiltre == 0) {
+          arrayToReturn.push(produit);
+        }
+      });
+    }
+
+    return arrayToReturn;
   },
   getProduitById: function getProduitById(state) {
     return function (idProduit) {

@@ -8,6 +8,27 @@ let getters = {
     getProduits(state) {
         return state.produits;
     },
+    getProduitsFilterd(state) {
+       let arrayToReturn = [];
+       if (state.search != '') {
+            state.produits.forEach(produit => {
+                let lowercaseName = produit.nom.toLowerCase();
+                let lowercaseAuthor = produit.user.nom.toLowerCase();
+                let lowercaseText = produit.description.toLowerCase();
+                if (lowercaseName.includes(state.search.toLowerCase()) || lowercaseAuthor.includes(state.search.toLowerCase()) || lowercaseText.includes(state.search.toLowerCase())) {
+                    arrayToReturn.push(produit);
+                }
+            });
+       }
+       else {
+            state.produits.forEach(produit => {
+                if (produit.categories_id == state.produitsFiltre || state.produitsFiltre == 0) {
+                    arrayToReturn.push(produit);
+                }
+            });
+       }
+       return arrayToReturn;
+    },
     getProduitById : (state) => (idProduit) => {
         return state.produits.find(data => data.id == idProduit);
     },
