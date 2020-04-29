@@ -8,6 +8,18 @@ let getters = {
     getProduits(state) {
         return state.produits;
     },
+    getProduitById : (state) => (idProduit) => {
+        return state.produits.find(data => data.id == idProduit);
+    },
+    getProduitsRelated : (state) => (idProduit, idCategorie) => {
+        let arrayToReturn = [];
+        state.produits.forEach(item => {
+            if (arrayToReturn.length < 4 && item.id != idProduit && item.categories_id == idCategorie) {
+                arrayToReturn.push(item);
+            }
+        });
+        return arrayToReturn;
+    },
     getProduitsFiltre(state) {
         return state.produitsFiltre;
     },

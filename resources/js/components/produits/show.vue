@@ -90,19 +90,11 @@
         },
         // Va chercher le produit ayant l'id presente dans l'url dans le store
         produit() {
-          let produitsArray =  this.$store.getters.getProduits;
-          return produitsArray.find(data => data.id == this.$route.params.produitId);
+          return this.$store.getters.getProduitById(this.$route.params.produitId);
         },
         // Trouve les produits etant dans la meme categories que le produit affiche
         relatedProducts() {
-          let produitsArray =  this.$store.getters.getProduits;
-          let arrayToReturn = [];
-          produitsArray.forEach(item => {
-            if (arrayToReturn.length < 4 && item.categories_id == this.produit.categories_id) {
-              arrayToReturn.push(item);
-            }
-          });
-          return arrayToReturn;
+          return this.$store.getters.getProduitsRelated(this.$route.params.produitId, this.produit.categories_id);
         }
       },
       methods: {

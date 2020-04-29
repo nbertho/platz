@@ -2122,31 +2122,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Va chercher le produit ayant l'id presente dans l'url dans le store
     produit: function produit() {
-      var _this = this;
-
-      var produitsArray = this.$store.getters.getProduits;
-      return produitsArray.find(function (data) {
-        return data.id == _this.$route.params.produitId;
-      });
+      return this.$store.getters.getProduitById(this.$route.params.produitId);
     },
     // Trouve les produits etant dans la meme categories que le produit affiche
     relatedProducts: function relatedProducts() {
-      var _this2 = this;
-
-      var produitsArray = this.$store.getters.getProduits;
-      var arrayToReturn = [];
-      produitsArray.forEach(function (item) {
-        if (arrayToReturn.length < 4 && item.categories_id == _this2.produit.categories_id) {
-          arrayToReturn.push(item);
-        }
-      });
-      return arrayToReturn;
+      return this.$store.getters.getProduitsRelated(this.$route.params.produitId, this.produit.categories_id);
     }
   },
   methods: {
     // Ajoute un commentaire à la db et un "faux" commentaire a la suite (Vu qu'il n'y a pas de connexion à faire, l'utilisateur sera ici toujours l'utilisateur avec l'id 1 )
     submitForm: function submitForm() {
-      var _this3 = this;
+      var _this = this;
 
       // Si le formulaire n'est pas vide
       if (this.commentaire != '') {
@@ -2157,13 +2143,13 @@ __webpack_require__.r(__webpack_exports__);
         }; // Requete axios
 
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('api/commentaires/create', data).then(function (reponsePHP) {
-          _this3.commentaire = '';
+          _this.commentaire = '';
           var fakeComment = {
             user: 'John Doe',
             texte: data.texte
           };
 
-          _this3.commentaireAdded.push(fakeComment);
+          _this.commentaireAdded.push(fakeComment);
         });
       } else {
         alert('Vous ne pouvez pas publier de commentaire vide');
@@ -55228,6 +55214,24 @@ var getters = {
   },
   getProduits: function getProduits(state) {
     return state.produits;
+  },
+  getProduitById: function getProduitById(state) {
+    return function (idProduit) {
+      return state.produits.find(function (data) {
+        return data.id == idProduit;
+      });
+    };
+  },
+  getProduitsRelated: function getProduitsRelated(state) {
+    return function (idProduit, idCategorie) {
+      var arrayToReturn = [];
+      state.produits.forEach(function (item) {
+        if (arrayToReturn.length < 4 && item.id != idProduit && item.categories_id == idCategorie) {
+          arrayToReturn.push(item);
+        }
+      });
+      return arrayToReturn;
+    };
   },
   getProduitsFiltre: function getProduitsFiltre(state) {
     return state.produitsFiltre;
